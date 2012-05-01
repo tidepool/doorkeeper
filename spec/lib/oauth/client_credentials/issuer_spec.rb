@@ -5,10 +5,10 @@ require 'doorkeeper/oauth/client_credentials/issuer'
 class Doorkeeper::OAuth::ClientCredentialsRequest
   describe Issuer do
     let(:creator) { mock :acces_token_creator }
-    let(:server)  { mock :server, :access_token_expires_in => 100 }
+    let(:server)  { mock :server, :access_token_expiration_for => 100 }
     let(:validation) { mock :validation, :valid? => true }
 
-    subject { Issuer.new(server, validation) }
+    subject { Issuer.new(server, stub, validation) }
 
     describe :create do
       let(:client) { mock :client, :id => 'some-id' }

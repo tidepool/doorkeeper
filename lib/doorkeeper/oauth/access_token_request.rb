@@ -57,7 +57,15 @@ module Doorkeeper::OAuth
       Doorkeeper::OAuth::ErrorResponse.from_request(self)
     end
 
-    private
+    def resource_owner
+      base_token.resource_owner_id
+    end
+
+    def scopes
+      base_token.scopes
+    end
+
+  private
 
     def find_or_create_access_token
       if access_token
@@ -93,7 +101,7 @@ module Doorkeeper::OAuth
         :application_id    => client.id,
         :resource_owner_id => base_token.resource_owner_id,
         :scopes            => base_token.scopes_string,
-        :expires_in        => configuration.access_token_expires_in,
+        :expires_in        => configuration.access_token_expiration_for(self),
         :use_refresh_token => refresh_token_enabled?
       })
     end

@@ -95,4 +95,20 @@ describe Doorkeeper, "configuration" do
       subject.access_token_methods.should == [:from_access_token_param, :from_bearer_param]
     end
   end
+
+  describe 'access_token_expiration' do
+    it 'has defaults to :expiration' do
+      subject.access_token_expiration.should == :expiration
+    end
+
+    it "can change the value" do
+      Doorkeeper.configure { access_token_expiration :custom_expiration }
+      subject.access_token_expiration.should == :custom_expiration
+    end
+
+    it "initializes a custom expiration class given the value" do
+      Doorkeeper.configure { access_token_expiration :custom_expiration }
+      subject.expiration_class
+    end
+  end
 end

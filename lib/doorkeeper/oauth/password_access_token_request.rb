@@ -93,7 +93,7 @@ module Doorkeeper::OAuth
         :application_id     => client.id,
         :resource_owner_id  => resource_owner.id,
         :scopes             => scopes.to_s,
-        :expires_in         => configuration.access_token_expires_in,
+        :expires_in         => configuration.access_token_expiration_for(self),
         :use_refresh_token  => refresh_token_enabled?
       })
     end

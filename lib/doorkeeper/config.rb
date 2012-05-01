@@ -34,6 +34,10 @@ module Doorkeeper
         @config.instance_variable_set("@access_token_methods", methods)
       end
 
+      def access_token_expiration(strategy)
+        @config.instance_variable_set("@access_token_expiration", strategy)
+      end
+
       def use_refresh_token
         @config.instance_variable_set("@refresh_token_enabled", true)
       end
@@ -129,6 +133,19 @@ module Doorkeeper
 
     def access_token_methods
       @access_token_methods ||= [:from_bearer_authorization, :from_access_token_param, :from_bearer_param]
+    end
+
+    def access_token_expiration
+      @access_token_expiration ||= :expiration
+    end
+
+    def expiration_class
+      "Doorkeeper::OAuth::Token::#{access_token_expiration.to_s.classify}".constantize
+    end
+
+    def access_token_expiration_for(request)
+      strategy = expiration_class.new(request)
+      strategy.time_for(request.client, request.resource_owner, request.scopes)
     end
   end
 end

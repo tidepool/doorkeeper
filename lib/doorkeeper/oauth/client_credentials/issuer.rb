@@ -6,8 +6,8 @@ module Doorkeeper
       class Issuer
         attr_accessor :token, :validation, :error
 
-        def initialize(server, validation)
-          @server, @validation = server, validation
+        def initialize(server, request, validation)
+          @server, @request, @validation = server, request, validation
         end
 
         def create(client, scopes, creator = Creator.new)
@@ -26,7 +26,7 @@ module Doorkeeper
         def create_token(client, scopes, creator)
           creator.call(client, scopes, {
             :use_refresh_token => false,
-            :expires_in        => @server.access_token_expires_in
+            :expires_in        => @server.access_token_expiration_for(@request)
           })
         end
       end

@@ -31,7 +31,7 @@ Doorkeeper.configure do
   # Define access token scopes for your provider
   # For more information go to https://github.com/applicake/doorkeeper/wiki/Using-Scopes
   default_scopes  :public
-  optional_scopes :write, :update
+  optional_scopes :write, :update, :offline
 
   # Change the way client credentials are retrieved from the request object.
   # By default it retrieves first from `HTTP_AUTHORIZATION` header and
@@ -44,4 +44,6 @@ Doorkeeper.configure do
   # fallsback to `:access_token` or `:bearer_token` from `params` object
   # Check out the wiki for mor information on customization
   # access_token_methods :from_bearer_authorization, :from_access_token_param, :from_bearer_param
+
+  access_token_expiration :custom_expiration
 end

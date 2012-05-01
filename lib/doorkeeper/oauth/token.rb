@@ -1,3 +1,5 @@
+require 'doorkeeper/oauth/token/expiration'
+
 module Doorkeeper
   module OAuth
     class Token

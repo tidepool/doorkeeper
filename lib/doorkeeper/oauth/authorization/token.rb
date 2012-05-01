@@ -24,7 +24,7 @@ module Doorkeeper
             :application_id    => authorization.client.id,
             :resource_owner_id => authorization.resource_owner.id,
             :scopes            => authorization.scopes.to_s,
-            :expires_in        => configuration.access_token_expires_in,
+            :expires_in        => configuration.access_token_expiration_for(authorization),
             :use_refresh_token => false
           })
         end

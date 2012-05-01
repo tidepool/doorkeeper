@@ -10,14 +10,14 @@ module Doorkeeper
   module OAuth
     class ClientCredentialsRequest
       attr_accessor :issuer, :server, :client, :original_scopes, :scopes
-      attr_reader   :response
+      attr_reader   :response, :resource_owner
       alias         :authorization :response  # Remove this when API is consistent
       alias         :error_response :response
 
       delegate :error, :to => :issuer
 
       def issuer
-        @issuer ||= Issuer.new(server, Validation.new(server, self))
+        @issuer ||= Issuer.new(server, self, Validation.new(server, self))
       end
 
       def initialize(server, client, parameters = {})
