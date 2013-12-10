@@ -10,7 +10,7 @@ module Doorkeeper
     extend self
 
     def authorization_strategy(strategy)
-      get_strategy strategy, %w[code token]
+      get_strategy strategy, %w[code token password]
     rescue NameError
       raise Errors::InvalidAuthorizationStrategy
     end
